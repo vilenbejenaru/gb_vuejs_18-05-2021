@@ -1,16 +1,23 @@
 <template>
   <div class='calc'>
+    <div class="inputs">
       <input placeholder='a' v-model.number.lazy="op1" />
-      <input placeholder='b' v-model.number="op2" />
+      <input placeholder='b' v-model.number.trim="op2" />
       <span class='result'> = {{ result }} </span>
-      <br />
-      <button class='btn' @click="plus">a+b</button>
-      <button class='btn' @click="minus">a-b</button>
-      <button class='btn' v-on:click="mult">a*b</button>
-      <button class='btn'  :disabled="op2 === 0" @click="div">a/b</button>
-      <button class='btn' @click="pow">a**b</button>
-      <button class='btn' @click="divInt">a%b</button>
-      <hr />
+    </div>
+    <br />
+    <div class="error"  v-if="hasError">
+      {{errorText}}
+    </div>
+    <div class="btns">
+      <button class='btn btn__qwerty' @click="calc('+')">a+b</button>
+      <button class='btn' @click="calc('-')">a-b</button>
+      <button class='btn' v-on:click="calc('*')">a*b</button>
+      <button class='btn' @click="calc('/')">a/b</button>
+      <button class='btn' @click="calc('**')">a**b</button>
+      <button class='btn' @click="calc('%')">a%b</button>
+    </div>
+    <hr />
   </div>
 </template>
 
@@ -28,10 +35,39 @@ export default {
     return {
       op1: '',
       op2: '',
-      result: 0
+      result: 0,
+      hasError: false,
+      errorText: ' На ноль делить нельзя!!!'
     }
   },
   methods: {
+    calc (operation) {
+      this.hasError = false
+      if (operation === '/' && this.op2 === 0) {
+        this.hasError = true
+        return
+      }
+      switch (operation) {
+        case '+':
+          this.plus()
+          break
+        case '-':
+          this.minus()
+          break
+        case '*':
+          this.mult()
+          break
+        case '/':
+          this.div()
+          break
+        case '**':
+          this.pow()
+          break
+        case '%':
+          this.divInt()
+          break
+      }
+    },
     plus () {
       this.result = this.op1 + this.op2
     },
@@ -91,5 +127,13 @@ input {
   height: 40px;
   font-size: 24px;
   margin: 5px;
-}
+  &__qwerty {
+    color: #fff;
+  }
+ }
+  .error {
+    background-color: yellow;
+    border: 3px solid red;
+    padding: 10px;
+  }
 </style>
