@@ -47,45 +47,17 @@ export default {
         this.hasError = true
         return
       }
-      switch (operation) {
-        case '+':
-          this.plus()
-          break
-        case '-':
-          this.minus()
-          break
-        case '*':
-          this.mult()
-          break
-        case '/':
-          this.div()
-          break
-        case '**':
-          this.pow()
-          break
-        case '%':
-          this.divInt()
-          break
+      const { op1, op2 } = this
+      // const op1 = this.op1
+      const calcOperations = {
+        '+': () => op1 + op2,
+        '-': () => op1 - op2,
+        '*': () => op1 * op2,
+        '/': () => op1 / op2,
+        '**': () => op1 ** op2,
+        '%': () => op1 % op2
       }
-    },
-    plus () {
-      this.result = this.op1 + this.op2
-    },
-    minus () {
-      this.result = this.op1 - this.op2
-    },
-    mult () {
-      this.result = this.op1 * this.op2
-    },
-    div () {
-      this.result = this.op1 / this.op2
-    },
-    pow () {
-      this.result = this.op1 ** this.op2
-      // this.result = Math.pow(this.op1, this.op2)
-    },
-    divInt () {
-      this.result = this.op1 % this.op2
+      this.result = calcOperations[operation]()
     }
   }
 }
