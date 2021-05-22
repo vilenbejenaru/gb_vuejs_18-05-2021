@@ -1,20 +1,22 @@
 <template>
-  <div class="hello">
-    <input v-model.number="op1"/>
-    <input v-model.number="op2"/>
-    <span class="result"> = {{result}} </span>
-    <br>
-    <button class="btn" @click="plus">+</button>
-    <button class="btn" @click="minus">-</button>
-    <button class="btn" v-on:click="mult">*</button>
-    <button class="btn" @click="div">/</button>
-    <hr>
+  <div class='calc'>
+      <input placeholder='a' v-model.number.lazy="op1" />
+      <input placeholder='b' v-model.number="op2" />
+      <span class='result'> = {{ result }} </span>
+      <br />
+      <button class='btn' @click="plus">a+b</button>
+      <button class='btn' @click="minus">a-b</button>
+      <button class='btn' v-on:click="mult">a*b</button>
+      <button class='btn'  :disabled="op2 === 0" @click="div">a/b</button>
+      <button class='btn' @click="pow">a**b</button>
+      <button class='btn' @click="divInt">a%b</button>
+      <hr />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Calculator',
   props: {
     msg: String,
     secondMsg: {
@@ -24,8 +26,8 @@ export default {
   },
   data () {
     return {
-      op1: 0,
-      op2: 0,
+      op1: '',
+      op2: '',
       result: 0
     }
   },
@@ -41,6 +43,13 @@ export default {
     },
     div () {
       this.result = this.op1 / this.op2
+    },
+    pow () {
+      this.result = this.op1 ** this.op2
+      // this.result = Math.pow(this.op1, this.op2)
+    },
+    divInt () {
+      this.result = this.op1 % this.op2
     }
   }
 }
@@ -70,7 +79,7 @@ input {
   padding: 10px;
   box-sizing: border-box;
 }
- .result {
+.result {
   font-size: 36px;
   color: blue;
 }
@@ -80,7 +89,7 @@ input {
   border-radius: 20px;
   width: 80px;
   height: 40px;
-  font-size: 36px;
+  font-size: 24px;
   margin: 5px;
 }
 </style>

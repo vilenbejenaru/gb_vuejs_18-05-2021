@@ -1,18 +1,18 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome," :secondMsg="fio" />
+    <Calculator />
     {{created}}
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Calculator from './components/calc.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Calculator
   },
   data () {
     return {
@@ -23,9 +23,6 @@ export default {
     }
   },
   computed: {
-    fio () {
-      return `${this.name} ${this.lastName}`
-    },
     created () {
       return `Created by ${this.name} ${this.lastName}`
     }
