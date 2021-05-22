@@ -1,9 +1,14 @@
 <template>
   <div class="hello">
-    <h1 v-if='isShow'>{{ msg }} {{secondMsg}}</h1>
-    <button class="btn" @click="isShow = !isShow">Welcome</button>
+    <input v-model.number="op1"/>
+    <input v-model.number="op2"/>
+    <span class="result"> = {{result}} </span>
     <br>
-    <br>
+    <button class="btn" @click="plus">+</button>
+    <button class="btn" @click="minus">-</button>
+    <button class="btn" v-on:click="mult">*</button>
+    <button class="btn" @click="div">/</button>
+    <hr>
   </div>
 </template>
 
@@ -19,12 +24,23 @@ export default {
   },
   data () {
     return {
-      isShow: false
+      op1: 0,
+      op2: 0,
+      result: 0
     }
   },
   methods: {
-    writeConsole (event) {
-      console.log(event)
+    plus () {
+      this.result = this.op1 + this.op2
+    },
+    minus () {
+      this.result = this.op1 - this.op2
+    },
+    mult () {
+      this.result = this.op1 * this.op2
+    },
+    div () {
+      this.result = this.op1 / this.op2
     }
   }
 }
@@ -46,11 +62,25 @@ li {
 a {
   color: #42b983;
 }
+input {
+  width: 200px;
+  height: 40px;
+  margin: 10px;
+  font-size: 24px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+ .result {
+  font-size: 36px;
+  color: blue;
+}
 .btn {
   background-color: #42b983;
   border: 2px solid 35495e;
   border-radius: 20px;
-  width: 200px;
+  width: 80px;
   height: 40px;
+  font-size: 36px;
+  margin: 5px;
 }
 </style>
