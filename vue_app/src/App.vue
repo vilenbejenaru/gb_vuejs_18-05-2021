@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <img alt="Vue logo" src="./assets/logo.png" />
+    <HelloWorld msg="Welcome," :secondMsg="fio" />
+    {{created}}
   </div>
 </template>
 
@@ -12,6 +13,22 @@ export default {
   name: 'App',
   components: {
     HelloWorld
+  },
+  data () {
+    return {
+      operand1: 0,
+      operand2: 1,
+      name: 'Vilen',
+      lastName: 'Bejenaru'
+    }
+  },
+  computed: {
+    fio () {
+      return `${this.name} ${this.lastName}`
+    },
+    created () {
+      return `Created by ${this.name} ${this.lastName}`
+    }
   }
 }
 </script>
