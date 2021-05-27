@@ -1,31 +1,89 @@
 <template>
   <div id="app">
-    <Counter v-if="flag" />
-    <!-- <Counter />
-    <Counter />
-    <Counter />
-    <Counter /> -->
-    <button @click="flag = !flag">Change</button>
+    <div class="wrapper">
+      <header >
+        <h1 class="title"> My personal Cost</h1>
+        <h2 class="subtitle"> Financial state</h2>
+      </header>
+    <main>
+      <add-payment v-if="addBtnIsShown"
+                              @cancelEmit="emitAction"
+                              @saveEmit = "addPayment"/>
+      <button @click="addBtnIsShown = !addBtnIsShown "
+                    v-if="!addBtnIsShown">Add new cost</button>
+      <payments-display :items='paymentsList'/>
+
+    </main>
+    </div>
   </div>
 </template>
 
 <script>
-import Counter from './components/Counter.vue'
+import AddPayment from './components/addPayment.vue'
+import PaymentsDisplay from './components/PaymentsDisplay.vue'
+
 
 export default {
   name: 'App',
   components: {
-    Counter
+    PaymentsDisplay,
+    AddPayment,
   },
   data() {
     return {
-      flag: true
+      paymentsList: [],
+      addBtnIsShown: false,
     }
   },
+  methods: {
+      addPayment (data) {
+        this.paymentsList.push(data)
+      },
+      emitAction () {
+this.addBtnIsShown = false // скрывает инпуты через емит при на жатии на дочернюю кнопку; метод указывается при получении компонента в темплейт родителя
+      },
+       fetchData () {
+           return [
+               {
+                   date: '22.12.2020',
+                   category: 'Food',
+                   value: '123'
+               },
+               {
+                   date: '12.12.2020',
+                   category: 'Transport',
+                   value: '13'
+               },
+               {
+                   date: '22.12.2020',
+                   category: 'Housing',
+                   value: '12'
+               },
+               {
+                   date: '22.12.2020',
+                   category: 'Health',
+                   value: '143'
+               },
+               {
+                   date: '22.12.2020',
+                   category: 'Cloth',
+                   value: '34'
+               },
+               {
+                   date: '22.12.2020',
+                   category: 'House',
+                   value: '11'
+               }
+           ]
+       }
+  },
+    created() {
+       this.paymentsList = this.fetchData ()
+    }
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
