@@ -1,5 +1,5 @@
 <template>
-	<button @click="addCoast"></button>
+	<button class="add-coast__btn" @click="addCoast"></button>
 </template>
 
 <script>
@@ -7,7 +7,7 @@
 		name: 'addCoast',
 		data() {
 			return {
-                
+
             };
 		},
 		methods: {
@@ -18,4 +18,12 @@
 	};
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.add-coast__btn{
+	width: 100px;
+    height: 30px;
+    background-color: #3bba9f;
+    border: 1px solid #3f95cd;
+    border-radius: 20px;
+}
+</style>

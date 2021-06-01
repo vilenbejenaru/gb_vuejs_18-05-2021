@@ -1,13 +1,22 @@
 <template>
     <div class="add-wrapper">
-        <label for="">Date</label>
-        <input placeholder="insert date" v-model.trim="date">
-        <label for="">Category</label>
-        <input placeholder="insert category" v-model.trim="category">
-        <label for="">Value</label>
-        <input placeholder="insert price" v-model="value">
-        <button @click="onSave">Save</button>
-        <button @click="onCancel">Cancel </button>
+        <div class="add-info">
+            <label class="add-info__label"  for="">Date</label>
+            <input class="add-info__input" placeholder="insert date" v-model.trim="date">
+        </div>
+        <div class="add-info">
+            <label class="add-info__label" for="">Category</label>
+            <input class="add-info__input" placeholder="insert category" v-model.trim="category">
+        </div>
+        <div class="add-info">
+            <label class="add-info__label" for="">Value</label>
+            <input class="add-info__input" placeholder="insert price" v-model="value">
+        </div>
+        <div class="add-btns">
+            <button class="add-btn__cancel" @click="onCancel">Cancel </button>
+            <button class="add-btn__save" @click="onSave">Save</button>
+        </div>
+
     </div>
 </template>
 
@@ -23,10 +32,10 @@
         },
         methods: {
             onSave () {
-                const { category, value} = this
+                const { value} = this
                 const data = {
                     date: this.date || this.getCurrentDate,
-                    category,
+                    category: this.category || 'Unsorted',
                      value
                 }
                  this.$emit('saveEmit', data)  //данные из инпутов передаются в родитель для сохранения
@@ -47,6 +56,47 @@
     }
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+.add-wrapper{
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+.add-info{
+    width: 70%;
+    margin: 5px auto;
+    display: flex;
+    justify-content: space-evenly ;
+}
+.add-info__label{
+    color: #8e5ea2;
+}
+.add-info__input {
+    color: #0852a7;
+    outline: #3f95cd;
+}
+.add-info__input::placeholder{
+    color: #e8c3b9;
+}
+.add-btns{
+    width: 70%;
+    margin: 20px auto 10px;
+    display: flex;
+    justify-content: space-evenly ;
+}
+.add-btn__save{
+    width: 100px;
+    height: 30px;
+    background-color: #3bba9f;
+    border: 1px solid #3f95cd;
+    border-radius: 3px;
+}
+.add-btn__cancel{
+    background-color: yellow;
+    border: 1px solid red;
+    width: 100px;
+    height: 30px;
+    border-radius: 3px;
+    }
 </style>
