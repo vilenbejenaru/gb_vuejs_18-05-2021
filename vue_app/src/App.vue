@@ -26,16 +26,17 @@
 </template>
 
 <script>
-	import AddPayment from './components/addPayment.vue';
+	import {mapMutations} from 'vuex';
 	import Pagination from './components/Pagination.vue';
 	import PaymentsDisplay from './components/PaymentsDisplay.vue';
+	import AddPayment from './components/addPayment.vue';
 
 	export default {
 		name: 'App',
 		components: {
+			Pagination,
 			PaymentsDisplay,
 			AddPayment,
-			Pagination,
 		},
 
 		data() {
@@ -45,6 +46,9 @@
 			};
 		},
 		methods: {
+			...mapMutations ([
+				'setPaymentsListData'
+			]),
 			addPayment(data) {
 				this.paymentsList.push(data);
 			},
@@ -65,7 +69,7 @@
 					},
 					{
 						date: '22.12.2020',
-						category: 'Housing',
+						category: 'House',
 						value: '12',
 					},
 					{
@@ -75,19 +79,19 @@
 					},
 					{
 						date: '22.12.2020',
-						category: 'Cloth',
+						category: 'Clothing',
 						value: '34',
 					},
 					{
 						date: '22.12.2020',
-						category: 'House',
+						category: 'Mobile',
 						value: '11',
 					},
 				];
 			},
 		},
 		created() {
-			this.paymentsList = this.fetchData();
+			this.setPaymentsListData(this.fetchData());
 		},
 	};
 </script>
