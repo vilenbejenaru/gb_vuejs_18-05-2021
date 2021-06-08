@@ -44,7 +44,7 @@
       <div class="numbers" v-for="(item, idx) in numbersComp" :key="idx">
         {{ item }}
       </div>
-      <div class="fibo">Фибоначчи: {{ fibResult }}</div>
+      <!-- <div class="fibo">Фибоначчи: {{ fibResult }}</div> -->
     </div>
   </div>
 </template>
@@ -75,20 +75,24 @@ export default {
     };
   },
   watch: {
+    op1(newValue){
+      this.result = this.op2 + newValue;
+    },
     op2(newValue) {
       this.result = this.op1 + newValue;
-    }
+    },
   },
   methods: {
     addNumber(val, op) {
       if (op == 2) {
         let tempVal = this.op2;
-        tempVal = tempVal + val;
-        this.op2 = Number(val);
+        console.log(tempVal);
+        tempVal = tempVal +''+ val;
+        this.op2 = Number(tempVal);
       } else {
         let tempVal = this.op1;
-        tempVal = tempVal + val;
-        this.op1 = Number(val);
+        tempVal = tempVal+''+ val;
+        this.op1 = Number(tempVal);
       }
     },
     delNumber(op) {
@@ -120,6 +124,7 @@ export default {
       this.result = calcOperations[operation]();
     },
     fib(n) {
+      console.log(n)
       return n <= 1 ? n : this.fib(n - 1) + this.fib(n - 2);
     }
   },
@@ -128,10 +133,11 @@ export default {
       return this.numbers.filter(n => n > 6);
     },
     fib1() {
-      return this.fib(this.op1);
+      // return this.fib(this.op1);
     },
     fibResult() {
-      return this.fib(this.op1) - this.fib(this.op2);
+      // for testing
+      // return this.fib(this.op1) - this.fib(this.op2);
     }
   }
 };
