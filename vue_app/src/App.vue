@@ -5,6 +5,7 @@
 				<h1 class="title">My personal Cost</h1>
 				<h2 class="subtitle">Financial state</h2>
 			</header>
+			<div>{{ getFPV }}</div>
 			<main>
 				<add-payment
 					v-if="addBtnIsShown"
@@ -26,7 +27,7 @@
 </template>
 
 <script>
-	import {mapMutations} from 'vuex';
+	import { mapMutations } from 'vuex';
 	import Pagination from './components/Pagination.vue';
 	import PaymentsDisplay from './components/PaymentsDisplay.vue';
 	import AddPayment from './components/addPayment.vue';
@@ -46,9 +47,7 @@
 			};
 		},
 		methods: {
-			...mapMutations ([
-				'setPaymentsListData'
-			]),
+			...mapMutations(['setPaymentsListData']),
 			addPayment(data) {
 				this.paymentsList.push(data);
 			},
@@ -60,36 +59,42 @@
 					{
 						date: '22.12.2020',
 						category: 'Food',
-						value: '123',
+						value: 123,
 					},
 					{
 						date: '12.12.2020',
 						category: 'Transport',
-						value: '13',
+						value: 13,
 					},
 					{
 						date: '22.12.2020',
 						category: 'House',
-						value: '12',
+						value: 12,
 					},
 					{
 						date: '22.12.2020',
 						category: 'Health',
-						value: '143',
+						value: 143,
 					},
 					{
 						date: '22.12.2020',
 						category: 'Clothing',
-						value: '34',
+						value: 34,
 					},
 					{
 						date: '22.12.2020',
 						category: 'Mobile',
-						value: '11',
+						value: 11,
 					},
 				];
 			},
 		},
+		computed: {
+			getFPV() {
+				return this.$store.getters.getFullPaymentValue;
+			},
+		},
+
 		created() {
 			this.setPaymentsListData(this.fetchData());
 		},
