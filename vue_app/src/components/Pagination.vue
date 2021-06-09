@@ -1,115 +1,57 @@
 <template>
-	<div>
-		<nav class="pagination">
-			<div class="page-item">
-				<button
-					type="button"
-					class="page-link"
-					v-if="page != 1"
-					@click="page--"
-				>
-					Prev
-				</button>
-			</div>
-			<div class="page-item">
-				<button
-					type="button"
-					class="page-link"
-					v-for="(pageNumber, index) in pages.slice(page - 1, page + 5)" :key="index"
-					@click="page = pageNumber"
-				>
-					{{ pageNumber }}
-				</button>
-			</div>
-			<div class="page-item">
-				<button
-					type="button"
-					@click="page++"
-					v-if="page < pages.length"
-					class="page-link"
-				>
-					Next
-				</button>
-			</div>
-		</nav>
-	</div>
+  <div class="pagination">
+    <div class="page-item" @click="onClick(cur - 1)">-</div>
+    <div class="page-item"
+      v-for="i in amount" :key="i"
+       @click="onClick(i)"
+    >{{ i }}</div>
+    <div class="page-item" @click="onClick(cur + 1)">+</div>
+  </div>
 </template>
 
 <script>
-	export default {
-		name: 'Pagination',
-		props: {
-            // selectList: {
-            //     type: Array,
-            //     default: () => [ ]
-            // },
-        },
-		data() {
-			return {
-				selectList: [],
-				page: 1,
-				perPage: 5,
-				pages: [],
-			};
-		},
-		methods: {
-			getSelectList() {
-				// let data = [];
-				for (let i = 0; i < 20; i++) {
-					this.selectList.push({
-						index: this.index,
-						date: this.date,
-						category: this.category,
-                        value: this.value
-					});
-				}
-			},
-			setPages() {
-				let numberOfPages = Math.ceil(
-					this.selectList.length / this.perPage,
-				);
-				for (let index = 1; index <= numberOfPages; index++) {
-					this.pages.push(index);
-				}
-			},
-			paginate(selectList) {
-				let page = this.page;
-				let perPage = this.perPage;
-				let from = page * perPage - perPage;
-				let to = page * perPage;
-				return selectList.slice(from, to);
-			},
-		},
-		computed: {
-			displayedSelectList() {
-				return this.paginate(this.selectList);
-			},
-		},
-		watch: {
-			selectList() {
-				this.setPages();
-			},
-		},
-		created() {
-			this.getSelectList();
-		},
-	};
+export default {
+  props: {
+    length: Number,
+    n: Number,
+    cur: Number
+  },
+  computed: {
+    amount () {
+      return Math.ceil(this.length / this.n)
+    }
+  },
+  methods: {
+    onClick (p) {
+      if (p < 1 || p > this.amount) {
+        return
+      }
+      this.$emit('paginate', p)
+    }
+  }
+}
 </script>
 
-<style scoped>
+<style lang="scss">
+
 	.pagination {
-		width: 50%;
+    max-width: 750px;
+		width: 70%;
 		margin: 20px auto;
+    display: flex;
+    justify-content: space-evenly;
 	}
 	.page-item {
-		display: inline-block;
-
-	}
-	.page-link {
+    width: 20px;
 		font-size: 14px;
 		color: #3bba9f;
 		font-weight: 500;
         border: 1px solid #3f95cd;
         border-radius: 3px;
+    &:hover, :active {
+      background-color: #3bba9f;
+      color: black;
+
+    }
 	}
 </style>
