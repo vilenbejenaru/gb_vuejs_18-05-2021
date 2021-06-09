@@ -11,6 +11,7 @@
     </select>
   </div>
 </template>
+
 <script>
 export default {
   name: "SelectList",
@@ -28,8 +29,10 @@ export default {
   }
 };
 </script>
-<style scoped>
-.select {
-  width: 100%;
+<style lang="scss">
+
+select {
+  height: 21px;
+  width: 140px;
 }
 </style>
