@@ -44,7 +44,7 @@
 		},
 		data() {
 			return {
-				page: 1,
+				page: 0,
 				n: 15,
 			};
 		},
@@ -59,6 +59,9 @@
 				const { n, page } = this;
 				return this.items.slice(n * (page - 1), n * (page - 1) + n);
 			},
+		},
+		created() {
+			 this.page = this.$route.params.page || 1 
 		},
 	};
 </script>
