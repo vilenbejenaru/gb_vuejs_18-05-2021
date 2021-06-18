@@ -3,74 +3,70 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-import PageAbout from '../views/PageAbout.vue'
-import PageDashboard from '../views/PageDashBoard.vue'
-import Page404 from '../views/Page404.vue'
-
-const router = new Router({
+const router = new Router ({
     mode: 'history',
     routes: [
-        {
-            path: '/',
-            name: 'index',
-            component: PageDashboard,
-        },
-        {
-            path: '/dashboard',
-            name: 'dashboard',
-            component: PageDashboard,
-        },
-        {
-            path: '/dashboard/:page',
-            name: 'dashboard',
-            component: PageDashboard,
-        },
-        {
-            path: '/about',
-            name: 'about',
-            component: PageAbout
-        },
-        {
-            path: '/about*',
-            name: 'about',
-            component: PageAbout
-        },
-        {
-            path: '/page404',
-            name: '404',
-            component: Page404
-        },
-        {
-            path: '*',
-            component: Page404
-        }
+          {
+        path: '/dashboard',
+        name: 'Dashboard',
+        component: () => import (
+          /*webpackChunkName: "PageDashboard"  */'../views/PageDashBoard'
+        )
+      },
+      {
+        path: '/dashboard/:page',
+        // name: 'Dashboard',
+        component: () => import (
+          /*webpackChunkName: "PageDashboard"  */'../views/PageDashBoard'
+        )
+      },
+      {
+        path: '/about',
+        name: 'About',
+        ccomponent: () => import (
+          /*webpackChunkName: "PageAbout"  */'../views/PageAbout'
+        )
+      },
+      {
+        path: '/page404',
+        name: '404',
+        component: () => import (
+          /*webpackChunkName: "Page404"  */'../views/Page404'
+        )
+      },
+      {
+        path: '*',
+        component: () => import (
+          /*webpackChunkName: "Page404"  */'../views/Page404'
+        )
+      }
     ]
-})
+  })
 
-const isUserAuth = true
+  const isUserAuth = true
 
-const getTitleByRouteName = routeName => {
+  const getTitleByRouteName = routeName => {
     return {
-        'dashboard': 'Dashboard page',
-        'about': 'About page',
-        'unknown': 'NotFound'
+      '/': 'My personal coasts',
+      'Dashboard': 'Dashboard',
+      'About': 'About',
+      'Calculator': 'Calculator',
+      '404': 'Error 404',
     }[routeName]
-}
+  }
 
-router.beforeEach((to, from, next) => {
-    if(to.name === 'dashboard' && !isUserAuth) {
-        next({name: '404'})
+  router.beforeEach((to, from, next) => {
+    if(to.name === 'Home' && !isUserAuth) {
+      next({
+        name: '404',
+      })
     } else {
-
-        next()
+      next()
     }
-})
+  })
 
-router.afterEach((to,from)=>{
-    console.log('to', to)
-    console.log('from', from)
-
+  router.afterEach((to/*,from*/)=>{
     document.title = getTitleByRouteName(to.name)
-})
+  })
 
-export default router
+  export default router
