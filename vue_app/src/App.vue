@@ -2,12 +2,28 @@
   <div id="app">
     <div class="wrapper">
       <header>
-        <router-link to="/dashboard"> Dashboard R </router-link>/
-        <router-link to="/about"> About R </router-link>/
-        <router-link to="/page404"> 404 R </router-link> /
-        <router-link to="/ payment">New payment </router-link> /
+        <router-link to="/dashboard">
+          Dashboard R
+        </router-link>/
+        <router-link to="/about">
+          About R
+        </router-link>/
+        <router-link to="/page404">
+          404 R
+        </router-link>
+        /
+        <router-link to="/payment">
+          New payment
+        </router-link>
+        /
+        <router-link to="/calc">
+          Calculator
+        </router-link>
+        /
       </header>
-      <h1 class="title">My personal Cost</h1>
+      <h1 class="title">
+        My personal Cost
+      </h1>
 
       <main>
         <router-view />
@@ -18,6 +34,8 @@
         v-if="modalWindow"
         :name="modalWindow"
         :header-name="modalHeader"
+        :modal-settings="modalSettings"
+        @close="onHide"
       />
     </transition>
   </div>
@@ -43,9 +61,9 @@ export default {
     this.$modal.EventBus.$on("hide", this.onHide);
     this.$store.dispatch("fetchData");
   },
-    beforeDestroy(){
-     this.$modal.EventBus.$off('show', this.onShown)
-     this.$modal.EventBus.$off('hide', this.onHide)
+  beforeDestroy() {
+    this.$modal.EventBus.$off("show", this.onShown);
+    this.$modal.EventBus.$off("hide", this.onHide);
   },
   methods: {
     ...mapMutations(["setPaymentListData"]),
@@ -61,12 +79,14 @@ export default {
       });
     },
     onHide() {
-      this.modalWindow = "";
+      this.ModalWindoW = "";
       this.modalHeader = "";
+      this.modalSettings = {};
     },
     onShown(data) {
-      this.modalWindow = data.name;
+      this.ModalWindoW = data.name;
       this.modalHeader = data.headerName;
+      this.modalSettings = data.modalSettings;
     }
   }
 };
@@ -82,10 +102,12 @@ export default {
   margin-top: 60px;
 }
 
-:global(.fade-enter-active), :global(.fade-leave-active){
-  transition: opacity .6s;
+:global(.fade-enter-active),
+:global(.fade-leave-active) {
+  transition: opacity 0.6s;
 }
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 </style>
