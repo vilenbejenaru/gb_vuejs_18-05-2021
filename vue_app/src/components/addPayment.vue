@@ -1,31 +1,50 @@
 <template>
   <div class="add-wrapper">
     <div class="add-info">
-      <label class="add-info__label" for="">Date</label>
+      <label
+        class="add-info__label"
+        for=""
+      >Date</label>
       <input
+        v-model.trim="date"
         class="add-info__input"
         placeholder="insert date"
-        v-model.trim="date"
-      />
+      >
     </div>
     <div class="add-info">
-      <label class="add-info__label" for="">Category</label>
+      <label
+        class="add-info__label"
+        for=""
+      >Category</label>
 
-      <select-list :dictionaryList="getCategorylist" />
+      <select-list :dictionary-list="getCategorylist" />
 
       <!-- <input class="add-info__input" placeholder="insert category" v-model.trim="category"> -->
     </div>
     <div class="add-info">
-      <label class="add-info__label" for="">Value</label>
+      <label
+        class="add-info__label"
+        for=""
+      >Value</label>
       <input
+        v-model="value"
         class="add-info__input"
         placeholder="insert price"
-        v-model="value"
-      />
+      >
     </div>
     <div class="add-btns">
-      <button class="add-btn__cancel" @click="onCancel">Cancel</button>
-      <button class="add-btn__save" @click="onSave">Save</button>
+      <button
+        class="add-btn__cancel"
+        @click="onCancel"
+      >
+        Cancel
+      </button>
+      <button
+        class="add-btn__save"
+        @click="onSave"
+      >
+        Save
+      </button>
     </div>
   </div>
 </template>
@@ -43,6 +62,23 @@ export default {
       category: "",
       value: 0
     };
+  },
+   computed: {
+    ...mapGetters(["getCategorylist"]),
+    getCurrentDate() {
+      const date = new Date();
+      const d = date.getDate();
+      const m = date.getMonth();
+      const y = date.getFullYear();
+      return `${d}.${m}.${y}`;
+    }
+  },
+  actions: {
+    ...mapActions(["loadCategories"])
+  },
+
+  mounted() {
+    this.$store.dispatch("loadCategories");
   },
   methods: {
     onSave() {
@@ -65,23 +101,8 @@ export default {
     onCancel() {
       this.$emit("cancelEmit");
     }
-  },
-  computed: {
-    ...mapGetters(["getCategorylist"]),
-    getCurrentDate() {
-      const date = new Date();
-      const d = date.getDate();
-      const m = date.getMonth();
-      const y = date.getFullYear();
-      return `${d}.${m}.${y}`;
-    }
-  },
-  actions: {
-    ...mapActions(["loadCategories"])
-  },
-  mounted() {
-    this.$store.dispatch("loadCategories");
   }
+
 };
 </script>
 

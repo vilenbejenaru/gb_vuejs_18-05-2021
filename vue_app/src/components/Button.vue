@@ -1,10 +1,13 @@
 <template>
-	<button class="add-coast__btn" @click="addCoast"></button>
+  <button
+    class="add-coast__btn"
+    @click="addCoast"
+  />
 </template>
 
 <script>
 	export default {
-		name: 'addCoast',
+		name: 'AddCoast',
 		data() {
 			return {
             };

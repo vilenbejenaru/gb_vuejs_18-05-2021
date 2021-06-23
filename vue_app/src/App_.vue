@@ -1,13 +1,31 @@
 <template>
   <div id="app">
+    <v-app>
+      <v-main>
+        <v-app-bar color="blue">
+          <v-btn to="/dashboard"> Dashboard R </v-btn>/
+          <v-btn to="/about"> About R </v-btn>/
+          <v-btn to="/page404">
+            404 R
+          </v-btn>
+          /
+          <v-btn to="/payment">
+            New payment
+          </v-btn>
+          /
+          <v-btn to="/calc">
+            Calculator
+          </v-btn>
+          /
+        </v-app-bar>
+        <v-btn color="success">text</v-btn>
+      </v-main>
+    </v-app>
+
     <div class="wrapper">
-      <header>
-        <router-link to="/dashboard">
-          Dashboard R
-        </router-link>/
-        <router-link to="/about">
-          About R
-        </router-link>/
+      <!-- <header>
+        <router-link to="/dashboard"> Dashboard R </router-link>/
+        <router-link to="/about"> About R </router-link>/
         <router-link to="/page404">
           404 R
         </router-link>
@@ -20,7 +38,7 @@
           Calculator
         </router-link>
         /
-      </header>
+      </header> -->
       <h1 class="title">
         My personal Cost
       </h1>

@@ -22,7 +22,7 @@ const router = new Router ({
       },
       {
         path: '/about',
-        name: 'About',
+        name: 'PageAbout',
         ccomponent: () => import (
           /*webpackChunkName: "PageAbout"  */'../views/PageAbout'
         )
@@ -32,6 +32,20 @@ const router = new Router ({
         name: '404',
         component: () => import (
           /*webpackChunkName: "Page404"  */'../views/Page404'
+        )
+      },
+      {
+        path: '/payment',
+        name: 'PagePayment',
+        component: () => import (
+          /*webpackChunkName: "PagePayment"  */'../views/PagePayment'
+        )
+      },
+      {
+        path: '/calc',
+        name: 'PageCalc',
+        component: () => import (
+          /*webpackChunkName: "PageCalculator"  */'../views/PageCalc'
         )
       },
       {
