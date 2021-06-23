@@ -2,51 +2,25 @@
   <div id="app">
     <v-app>
       <v-main>
-        <v-app-bar color="blue">
-          <v-btn to="/dashboard"> Dashboard R </v-btn>/
-          <v-btn to="/about"> About R </v-btn>/
-          <v-btn to="/page404">
+        <v-app-bar flat color="blue">
+          <v-btn plain :ripple="false" to="/dashboard"> Dashboard R</v-btn>/
+          <v-btn plain :ripple="false"  to="/about"> About R </v-btn>/
+          <v-btn plain :ripple="false"  to="/page404">
             404 R
           </v-btn>
           /
-          <v-btn to="/payment">
+          <v-btn plain :ripple="false"  to="/payment">
             New payment
           </v-btn>
           /
-          <v-btn to="/calc">
+          <v-btn plain :ripple="false"  to="/calc">
             Calculator
           </v-btn>
           /
         </v-app-bar>
-        <v-btn color="success">text</v-btn>
+        <router-view />
       </v-main>
     </v-app>
-
-    <div class="wrapper">
-      <!-- <header>
-        <router-link to="/dashboard"> Dashboard R </router-link>/
-        <router-link to="/about"> About R </router-link>/
-        <router-link to="/page404">
-          404 R
-        </router-link>
-        /
-        <router-link to="/payment">
-          New payment
-        </router-link>
-        /
-        <router-link to="/calc">
-          Calculator
-        </router-link>
-        /
-      </header> -->
-      <h1 class="title">
-        My personal Cost
-      </h1>
-
-      <main>
-        <router-view />
-      </main>
-    </div>
     <transition name="fade">
       <ModalWindow
         v-if="modalWindow"
@@ -113,19 +87,6 @@ export default {
 <style lang="scss" scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 
-:global(.fade-enter-active),
-:global(.fade-leave-active) {
-  transition: opacity 0.6s;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
 </style>

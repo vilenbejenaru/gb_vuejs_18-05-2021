@@ -1,11 +1,35 @@
 <template>
-  <div>
+  <v-container>
+    <v-row>
+      <v-col  >
+        <div class="text-xl-h3 text-sm-h4 text-xs-h6">My personal cost</div>
+        <v-btn color="blue">Add new payment <v-icon>mdi-plus</v-icon></v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols=6>
+        <v-data-table
+          :headers="headers"
+          :items="getPaymentList"
+          :items-per-page="10"
+          :page.sync="page"
+          class="elevation-1"
+              hide-default-footer
+              @page-count="pageCount = $event"
+        ></v-data-table>
+        <v-pagination
+        v-model="page"
+        :length="pageCount"
+      ></v-pagination>
+      </v-col>
+    </v-row>
     <h2 class="subtitle">Total: {{ getFullPaymentValue }}</h2>
     <h1>DashBoard</h1>
+    <button-modal/>
 
-    <button class="add-btn" @click="isModalShow = true">
+    <!-- <button class="add-btn" @click="isModalShow = true">
       New payment
-    </button>
+    </button> -->
 
     <transition name="fade" appear>
       <div
@@ -23,9 +47,7 @@
         @click="isModalShow = false"
       />
     </transition>
-
-    <payments-display :items="getPaymentList" />
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -33,16 +55,31 @@ import { mapGetters, mapMutations } from "vuex";
 
 import AddPayment from "../components/AddPayment";
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
+import ButtonModal from "../components/ButtonModal.vue";
 export default {
   name: "PageDashboard",
   components: {
     AddPayment,
-    PaymentsDisplay
+    PaymentsDisplay,
+    ButtonModal
   },
   data() {
     return {
+       page: 1,
+        pageCount: 0,
       isModalShow: false,
-      settings: {}
+      settings: {},
+      headers: [
+        { text: "Nr.", value: "value", sortable: true },
+        {
+          text: "Date",
+          align: "start",
+          sortable: false,
+          value: "date"
+        },
+        { text: "Category", value: "category", sortable: true },
+        { text: "Value", value: "value", sortable: true }
+      ]
     };
   },
   computed: {
