@@ -1,5 +1,7 @@
 <template>
-  <button @click="onClick">Click me</button>
+  <button @click="onClick">
+      <slot />
+      </button>
 </template>
 
 <script>

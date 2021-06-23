@@ -1,52 +1,96 @@
 <template>
   <v-container>
     <v-row>
-      <v-col  >
+      <v-col>
         <div class="text-xl-h3 text-sm-h4 text-xs-h6">My personal cost</div>
-        <v-btn color="blue">Add new payment <v-icon>mdi-plus</v-icon></v-btn>
+        <v-dialog v-model="dialog" width="500">
+          <template v-slot:activator="{ on }">
+            <v-btn color="blue" v-on="on"
+              >Add new payment <v-icon>mdi-plus</v-icon></v-btn
+            >
+          </template>
+          <v-card>
+            <v-card-title class="text-h5 grey lighten-2">
+              Add Payment
+            </v-card-title>
+
+            <v-card-text>
+              <v-menu
+                ref="menu"
+                v-model="menu"
+                :close-on-content-click="false"
+                :return-value.sync="paymentData.date"
+                transition="scale-transition"
+                offset-y
+                min-width="auto"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="paymentData.date"
+                    label="Picker in menu"
+                    prepend-icon="mdi-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker v-model="paymentData.date" no-title scrollable>
+                  <v-spacer></v-spacer>
+                  <v-btn text color="primary" @click="menu = false">
+                    Cancel
+                  </v-btn>
+                  <v-btn
+                    text
+                    color="primary"
+                    @click="$refs.menu.save(paymentData.date)"
+                  >
+                    OK
+                  </v-btn>
+                </v-date-picker>
+              </v-menu>
+              <v-select
+                :items="cats"
+                v-model="paymentData.category"
+                label="Category"
+              ></v-select>
+              <v-text-field
+                label="Cost"
+                :rules="rules"
+                v-model.number="paymentData.value"
+                hide-details="auto"
+              ></v-text-field>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="primary" text @click="addPayment">
+                Save
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols=6>
+      <v-col cols="6">
         <v-data-table
           :headers="headers"
           :items="getPaymentList"
           :items-per-page="10"
           :page.sync="page"
           class="elevation-1"
-              hide-default-footer
-              @page-count="pageCount = $event"
+          hide-default-footer
+          @page-count="pageCount = $event"
         ></v-data-table>
-        <v-pagination
-        v-model="page"
-        :length="pageCount"
-      ></v-pagination>
+        <v-pagination v-model="page" :length="pageCount"></v-pagination>
+      </v-col>
+      <v-col cols="6">
+        PieChart
       </v-col>
     </v-row>
     <h2 class="subtitle">Total: {{ getFullPaymentValue }}</h2>
     <h1>DashBoard</h1>
-    <button-modal/>
-
-    <!-- <button class="add-btn" @click="isModalShow = true">
-      New payment
-    </button> -->
-
-    <transition name="fade" appear>
-      <div
-        class="modal-overlay"
-        v-if="isModalShow"
-        @click="isModalShow = false"
-      ></div>
-    </transition>
-    <transition name="slide" appear>
-      <AddPayment
-        class="modal"
-        v-if="isModalShow"
-        @cancelEmit="actionEmit"
-        @addNewPayment="addPayment"
-        @click="isModalShow = false"
-      />
-    </transition>
+    <button>Left</button>
+    <button>Right</button>
   </v-container>
 </template>
 
@@ -65,10 +109,19 @@ export default {
   },
   data() {
     return {
-       page: 1,
-        pageCount: 0,
-      isModalShow: false,
+       rules: [
+        value => !!value || 'Required.',
+        value => (value && value.length >= 1) || 'Min 1 characters',
+      ],
+      page: 1,
+      pageCount: 0,
       settings: {},
+      paymentData: {
+        date: "",
+        category: "",
+        value: ""
+      },
+      cats: ["Food", "Transport", "Education", "House", "Internet"],
       headers: [
         { text: "Nr.", value: "value", sortable: true },
         {
@@ -90,8 +143,9 @@ export default {
     actionEmit() {
       this.addBtnIsShown = false;
     },
-    addPayment(data) {
-      this.$store.commit("addDataToPaymentList", data);
+    addPayment() {
+      const {date, amount, category} = this
+      this.$store.commit("addDataToPaymentList", {date, value:amount, category});
     },
     goTopage(pageName) {
       this.$router.push({
@@ -105,7 +159,8 @@ export default {
   },
   openModal() {
     this.$modal.show("AddPayment", "add Payment");
-  }
+  },
+  onSave() {}
 };
 </script>
 

@@ -4,16 +4,16 @@
       <v-main>
         <v-app-bar flat color="blue">
           <v-btn plain :ripple="false" to="/dashboard"> Dashboard R</v-btn>/
-          <v-btn plain :ripple="false"  to="/about"> About R </v-btn>/
-          <v-btn plain :ripple="false"  to="/page404">
+          <v-btn plain :ripple="false" to="/about"> About R </v-btn>/
+          <v-btn plain :ripple="false" to="/page404">
             404 R
           </v-btn>
           /
-          <v-btn plain :ripple="false"  to="/payment">
+          <v-btn plain :ripple="false" to="/payment">
             New payment
           </v-btn>
           /
-          <v-btn plain :ripple="false"  to="/calc">
+          <v-btn plain :ripple="false" to="/calc">
             Calculator
           </v-btn>
           /
@@ -88,5 +88,4 @@ export default {
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
 }
-
 </style>
