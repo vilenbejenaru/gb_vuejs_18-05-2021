@@ -5,10 +5,12 @@
         <input
           v-model.number.lazy="op1"
           placeholder="a"
+          name="op1"
         >
         <input
           v-model.number.trim="op2"
           placeholder="b"
+          name="op2"
         >
         <span class="result"> = {{ result }} </span>
       </div>
@@ -26,25 +28,29 @@
           class="btn"
           :title="operation"
           :disabled="op1 === ' ' && op2 === ' '"
+          :name="buttons"
           @click="calc(operation)"
         >
           {{ operation }}
         </button>
       </div>
       <hr>
-      <!-- <input
+      <input
         id="checkbox"
         v-model="checked"
         type="checkbox"
         @click="checked = !checked"
       >
       <label for="checkbox">Цифровая Клавиатура</label>
-      <div v-if="checked">
+      <div
+        v-if="checked"
+        name="checked"
+      >
         <keyboard
           @addNum="addNumber"
           @delNum="delNumber"
         />
-      </div> -->
+      </div>
     </div>
     <div class="results">
       <div class="logs">
