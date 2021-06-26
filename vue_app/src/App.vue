@@ -2,18 +2,45 @@
   <div id="app">
     <v-app>
       <v-main>
-        <v-app-bar flat color="blue">
-          <v-btn plain :ripple="false" to="/dashboard"> Dashboard R</v-btn>/
-          <v-btn plain :ripple="false" to="/about"> About R </v-btn>/
-          <v-btn plain :ripple="false" to="/page404">
+        <v-app-bar
+          flat
+          color="blue"
+        >
+          <v-btn
+            plain
+            :ripple="false"
+            to="/dashboard"
+          >
+            Dashboard R
+          </v-btn>/
+          <v-btn
+            plain
+            :ripple="false"
+            to="/about"
+          >
+            About R
+          </v-btn>/
+          <v-btn
+            plain
+            :ripple="false"
+            to="/page404"
+          >
             404 R
           </v-btn>
           /
-          <v-btn plain :ripple="false" to="/payment">
+          <v-btn
+            plain
+            :ripple="false"
+            to="/payment"
+          >
             New payment
           </v-btn>
           /
-          <v-btn plain :ripple="false" to="/calc">
+          <v-btn
+            plain
+            :ripple="false"
+            to="/calc"
+          >
             Calculator
           </v-btn>
           /
@@ -21,24 +48,18 @@
         <router-view />
       </v-main>
     </v-app>
-    <transition name="fade">
-      <ModalWindow
-        v-if="modalWindow"
-        :name="modalWindow"
-        :header-name="modalHeader"
-        :modal-settings="modalSettings"
-        @close="onHide"
-      />
-    </transition>
+    <context-menu />
   </div>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
+import ContextMenu from './components/ContextMenu/ContextMenu.vue';
+
 export default {
   name: "App",
   components: {
-    ModalWindow: () => import("./components/ModalWindow.vue")
+    ContextMenu,
   },
   data() {
     return {

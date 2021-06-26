@@ -2,12 +2,20 @@
   <v-container>
     <v-row>
       <v-col>
-        <div class="text-xl-h3 text-sm-h4 text-xs-h6">My personal cost</div>
-        <v-dialog v-model="dialog" width="500">
-          <template v-slot:activator="{ on }">
-            <v-btn color="blue" v-on="on"
-              >Add new payment <v-icon>mdi-plus</v-icon></v-btn
+        <div class="text-xl-h3 text-sm-h4 text-xs-h6">
+          My personal cost
+        </div>
+        <v-dialog
+          v-model="dialog"
+          width="500"
+        >
+          <template #activator="{ on }">
+            <v-btn
+              color="blue"
+              v-on="on"
             >
+              Add new payment <v-icon>mdi-plus</v-icon>
+            </v-btn>
           </template>
           <v-card>
             <v-card-title class="text-h5 grey lighten-2">
@@ -24,7 +32,7 @@
                 offset-y
                 min-width="auto"
               >
-                <template v-slot:activator="{ on, attrs }">
+                <template #activator="{ on, attrs }">
                   <v-text-field
                     v-model="paymentData.date"
                     label="Picker in menu"
@@ -32,11 +40,19 @@
                     readonly
                     v-bind="attrs"
                     v-on="on"
-                  ></v-text-field>
+                  />
                 </template>
-                <v-date-picker v-model="paymentData.date" no-title scrollable>
-                  <v-spacer></v-spacer>
-                  <v-btn text color="primary" @click="menu = false">
+                <v-date-picker
+                  v-model="paymentData.date"
+                  no-title
+                  scrollable
+                >
+                  <v-spacer />
+                  <v-btn
+                    text
+                    color="primary"
+                    @click="menu = false"
+                  >
                     Cancel
                   </v-btn>
                   <v-btn
@@ -49,20 +65,24 @@
                 </v-date-picker>
               </v-menu>
               <v-select
-                :items="cats"
                 v-model="paymentData.category"
+                :items="cats"
                 label="Category"
-              ></v-select>
+              />
               <v-text-field
+                v-model.number="paymentData.value"
                 label="Cost"
                 :rules="rules"
-                v-model.number="paymentData.value"
                 hide-details="auto"
-              ></v-text-field>
+              />
             </v-card-text>
             <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="primary" text @click="addPayment">
+              <v-spacer />
+              <v-btn
+                color="primary"
+                text
+                @click="addPayment"
+              >
                 Save
               </v-btn>
             </v-card-actions>
@@ -80,14 +100,19 @@
           class="elevation-1"
           hide-default-footer
           @page-count="pageCount = $event"
-        ></v-data-table>
-        <v-pagination v-model="page" :length="pageCount"></v-pagination>
+        />
+        <v-pagination
+          v-model="page"
+          :length="pageCount"
+        />
       </v-col>
       <v-col cols="6">
-        PieChart
+        <doughnut />
       </v-col>
     </v-row>
-    <h2 class="subtitle">Total: {{ getFullPaymentValue }}</h2>
+    <h2 class="subtitle">
+      Total: {{ getFullPaymentValue }}
+    </h2>
     <h1>DashBoard</h1>
     <button>Left</button>
     <button>Right</button>
@@ -100,9 +125,11 @@ import { mapGetters, mapMutations } from "vuex";
 import AddPayment from "../components/AddPayment";
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
 import ButtonModal from "../components/ButtonModal.vue";
+import Doughnut from "../components/Doughnut.vue";
 export default {
   name: "PageDashboard",
   components: {
+    Doughnut,
     AddPayment,
     PaymentsDisplay,
     ButtonModal

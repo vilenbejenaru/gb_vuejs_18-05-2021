@@ -20,6 +20,7 @@
         :key="index"
         class="payment__line"
       >
+        {{
         <div class="payment__line-item">
           {{ index + 1 }}
         </div>
@@ -32,6 +33,7 @@
         <div class="payment__line-item">
           {{ item.value }}
         </div>
+        <span @click="onItemClick($event, item)">...</span>
       </div>
     </div>
 
@@ -63,7 +65,8 @@ export default {
       page: 0,
       n: 15
     };
-  },computed: {
+  },
+  computed: {
     ...mapGetters(["getPaymentList"]),
     currentElements() {
       const { n, page } = this;
@@ -74,11 +77,18 @@ export default {
     this.page = this.$route.params.page || 1;
   },
   methods: {
+    deleteItem: 'itemDelete',
     onPgaginate(p) {
       this.page = p;
+    },
+    onItemClick(event, item) {
+      const items = [
+        {text: 'Delete', actions: () => {this.deleteItem(item.id)}},
+        {text: 'Edit', actions: () => {console.log('Edit', item.id)}}
+      ]
+      this.$contextMenu.show({event, items})
     }
-  },
-
+  }
 };
 </script>
 

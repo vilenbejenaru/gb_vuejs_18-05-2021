@@ -34,6 +34,9 @@ export default new Vuex.Store({
         getCategorylist: state => state.categoryList
     },
     actions: {
+        deleteItem (commit, payload) {
+            console.log(payload)
+         },
         fetchData ({ commit }) {
             return new Promise((resolve) => {
             setTimeout(() => {
